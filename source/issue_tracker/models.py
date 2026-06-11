@@ -27,3 +27,9 @@ class Task(models.Model):
     type = models.ForeignKey(Type, on_delete=models.RESTRICT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.summary
+
+    class Meta:
+        db_table = 'task'
