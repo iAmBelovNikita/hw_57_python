@@ -1,0 +1,20 @@
+    <div class="modal fade" id="task-{{ task.pk }}-Modal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="taskModalLabel">Delete Task {{ task.title }} ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure want to delete task - "{{ task.title }}" ?</p>
+                    <form action="{% url 'task_delete' task.pk %}" id="task-delete-form-{{ task.pk }}" method="POST">
+                        {% csrf_token %}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back</button>
+                    <button type="submit" form="task-delete-form-{{ task.pk }}" class="btn btn-primary">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
