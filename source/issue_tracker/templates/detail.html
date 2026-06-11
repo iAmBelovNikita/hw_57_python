@@ -4,7 +4,7 @@
   <a href="{% url 'list' %}" class="btn btn-secondary">
     Back to list
   </a>
-  <a href="#" class="btn btn-primary">
+  <a href="{% url 'create' %}" class="btn btn-primary">
     Create Task
   </a>
 </div>
@@ -37,7 +37,7 @@
       </p>
 
       <div class="d-flex gap-2 mt-4">
-        <a href="#" class="btn btn-success">
+        <a href="{% url 'update' task.pk %}" class="btn btn-success">
           Update
         </a>
         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
@@ -45,5 +45,6 @@
         </button>
       </div>
     </div>
+      {% include 'partial/task_delete_modal.html' with task=task %}
   </div>
 {% endblock %}

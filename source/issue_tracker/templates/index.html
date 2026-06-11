@@ -37,7 +37,7 @@
                 <i class="bi bi-pencil-square"></i>
               </a>
 
-              <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-{{ message.pk }}-Modal">
+              <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
                 <i class="bi bi-x-square"></i>
               </a>
             </div>
@@ -49,6 +49,7 @@
 
         </div>
       </div>
+      {% include 'partial/task_delete_modal.html' with task=task %}
     </div>
     {% empty %}
       <p class="text-muted">No active messages yet.</p>
