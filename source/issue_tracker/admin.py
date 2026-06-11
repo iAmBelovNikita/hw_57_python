@@ -4,8 +4,8 @@ from .models import Task, Status, Type
 # Register your models here.
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ('id', 'summary', 'status', 'type', 'created_at', 'updated_at')
-    list_filter = ('status', 'type', 'created_at')
+    list_display = ('id', 'summary', 'status', 'created_at', 'updated_at')
+    list_filter = ('status', 'created_at')
     search_fields = ('summary', 'description')
     readonly_fields = ('created_at', 'updated_at')
 

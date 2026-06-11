@@ -24,7 +24,7 @@ class Task(models.Model):
     summary = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
     status = models.ForeignKey(Status, on_delete=models.RESTRICT)
-    type = models.ForeignKey(Type, on_delete=models.RESTRICT)
+    type_old = models.ForeignKey(Type, on_delete=models.RESTRICT)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
