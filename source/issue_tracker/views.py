@@ -33,3 +33,19 @@ class TaskCreateView(View):
             task = form.save()
             return redirect("detail", pk=task.pk)
         return render(request, "create.html", {"form": form})
+
+class TaskUpdateView(View):
+    def dispatch(self, request, *args, **kwargs):
+        self.task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request, pk):
+        form = TaskForm(instance=self.task)
+        return render(request, "update.html", {"form": form, "task": self.task})
+
+    def post(self, request, pk):
+        form = TaskForm(request.POST, instance=self.task)
+        if form.is_valid():
+            task = form.save()
+            return redirect("detail", pk=task.pk)
+        return render(request, "update.html", {"form": form, "task": self.task})

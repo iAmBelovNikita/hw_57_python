@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block nav %}
+  <a href="{% url 'detail' task.pk %}" class="btn btn-secondary">
+    Back to task
+  </a>
+{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="card-title mb-4">Update Task</h1>
+
+          {% include "partial/task_form.html" with button_text="Update" %}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+{% endblock %}
