@@ -24,11 +24,11 @@ class TaskForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-select"})
     )
 
-    type = forms.ModelChoiceField(
+    type = forms.ModelMultipleChoiceField(
         required=True,
         label="Type",
         queryset=Type.objects.all(),
-        widget=forms.Select(attrs={"class": "form-select"})
+        widget=forms.SelectMultiple(attrs={"class": "form-select"})
     )
 
     class Meta:

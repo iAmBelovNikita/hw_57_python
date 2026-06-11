@@ -31,6 +31,7 @@ class TaskCreateView(View):
         form = TaskForm(request.POST)
         if form.is_valid():
             task = form.save()
+            task.type.set(form.cleaned_data['type'])
             return redirect("detail", pk=task.pk)
         return render(request, "create.html", {"form": form})
 
@@ -47,6 +48,7 @@ class TaskUpdateView(View):
         form = TaskForm(request.POST, instance=self.task)
         if form.is_valid():
             task = form.save()
+            task.type.set(form.cleaned_data['type'])
             return redirect("detail", pk=task.pk)
         return render(request, "update.html", {"form": form, "task": self.task})
 
