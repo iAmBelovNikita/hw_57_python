@@ -20,6 +20,18 @@ class Status(models.Model):
     class Meta:
         db_table = 'status'
 
+class Project(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        db_table = 'project'
+
 class Task(models.Model):
     summary = models.CharField(max_length=200)
     description = models.TextField(blank=True, null=True)
