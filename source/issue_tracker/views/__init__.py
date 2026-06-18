@@ -5,3 +5,10 @@ from .task import (
     TaskUpdateView,
     TaskDeleteView,
 )
+from .project import (
+    ProjectListView,
+    ProjectDetailView,
+    ProjectCreateView,
+    ProjectUpdateView,
+    ProjectDeleteView,
+)
