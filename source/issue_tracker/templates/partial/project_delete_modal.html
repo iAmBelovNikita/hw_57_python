@@ -6,7 +6,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure want to delete project - "{{ project.summary }}" ?</p>
+                    <p>Are you sure want to delete project - "{{ project.title }}" ?</p>
                     <form action="{% url 'project-delete' project.pk %}" id="project-delete-form-{{ project.pk }}" method="POST">
                         {% csrf_token %}
                     </form>

@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block nav %}
+  <a href="{% url 'project-list' %}" class="btn btn-secondary">Back</a>
+{% endblock %}
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="card-title mb-4">Create Project</h1>
 
-</body>
-</html>
+          {% include "partial/project_form.html" with button_text="Create" %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -20,15 +20,16 @@ class TaskDetailView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['task'] = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+        context['project'] = context['task'].project
         return context
 
 class TaskCreateView(View):
-    def get(self, request):
+    def get(self, request, pk):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         form = TaskForm()
         return render(request, "task/create.html", {"form": form, "project": project})
 
-    def post(self, request):
+    def post(self, request, pk):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         form = TaskForm(request.POST)
         if form.is_valid():

@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block nav %}
-  <a href="{% url 'list' %}" class="btn btn-secondary">
-    Back to list
-  </a>
+  <a href="{% url 'project-detail' project.pk %}" class="btn btn-secondary">Back</a>
 {% endblock %}
 {% block content %}
   <div class="row justify-content-center">
