@@ -1,0 +1,64 @@
+from django.shortcuts import redirect
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy, reverse
+from django.db.models import Q
+from ..models import Project
+from ..forms import ProjectForm
+
+
+class ProjectListView(ListView):
+    model = Project
+    template_name = "project/index.html"
+    context_object_name = "projects"
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get("q", "").strip()
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query) | Q(description__icontains=query)
+            )
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["q"] = self.request.GET.get("q", "")
+        return context
+
+
+class ProjectDetailView(DetailView):
+    model = Project
+    template_name = "project/detail.html"
+    context_object_name = "project"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["tasks"] = self.object.task_set.all().order_by("-created_at")
+        return context
+
+
+class ProjectCreateView(CreateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = "project/create.html"
+
+    def get_success_url(self):
+        return reverse("project-detail", kwargs={"pk": self.object.pk})
+
+
+class ProjectUpdateView(UpdateView):
+    model = Project
+    form_class = ProjectForm
+    template_name = "project/update.html"
+
+    def get_success_url(self):
+        return reverse("project-detail", kwargs={"pk": self.object.pk})
+
+
+class ProjectDeleteView(DeleteView):
+    model = Project
+    success_url = reverse_lazy("project-list")
+
+    def get(self, request, *args, **kwargs):
+        return redirect("project-list")

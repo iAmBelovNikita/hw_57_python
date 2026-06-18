@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import TemplateView
-from ..models import Task
+from ..models import Task, Project
 from ..forms import TaskForm
 
 # Create your views here.
@@ -24,16 +24,20 @@ class TaskDetailView(TemplateView):
 
 class TaskCreateView(View):
     def get(self, request):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         form = TaskForm()
-        return render(request, "task/create.html", {"form": form})
+        return render(request, "task/create.html", {"form": form, "project": project})
 
     def post(self, request):
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         form = TaskForm(request.POST)
         if form.is_valid():
-            task = form.save()
+            task = form.save(commit=False)
+            task.project = project
+            task.save()
             task.type.set(form.cleaned_data['type'])
-            return redirect("detail", pk=task.pk)
-        return render(request, "task/create.html", {"form": form})
+            return redirect("project-detail", pk=project.pk)
+        return render(request, "task/create.html", {"form": form, "project": project})
 
 class TaskUpdateView(View):
     def dispatch(self, request, *args, **kwargs):
@@ -55,5 +59,6 @@ class TaskUpdateView(View):
 class TaskDeleteView(View):
     def post(self, request, *args, **kwargs):
         task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+        project_pk = task.project.pk
         task.delete()
-        return redirect("list")
+        return redirect("project-detail", pk=project_pk)
