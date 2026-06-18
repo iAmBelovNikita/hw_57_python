@@ -52,6 +52,56 @@
     }
 },
 {
+    "model": "issue_tracker.project",
+    "pk": 2,
+    "fields": {
+        "start_date": "2026-01-01",
+        "end_date": "2026-06-30",
+        "title": "Backend Refactor",
+        "description": "Refactoring the backend services and database layer"
+    }
+},
+{
+    "model": "issue_tracker.project",
+    "pk": 3,
+    "fields": {
+        "start_date": "2026-03-01",
+        "end_date": null,
+        "title": "Mobile App",
+        "description": "Development of the mobile application"
+    }
+},
+{
+    "model": "issue_tracker.project",
+    "pk": 4,
+    "fields": {
+        "start_date": "2026-04-15",
+        "end_date": "2026-12-31",
+        "title": "DevOps Infrastructure",
+        "description": "CI/CD pipelines, monitoring and deployment automation"
+    }
+},
+{
+    "model": "issue_tracker.project",
+    "pk": 5,
+    "fields": {
+        "start_date": "2026-05-01",
+        "end_date": null,
+        "title": "Frontend Redesign",
+        "description": "Full redesign of the user interface"
+    }
+},
+{
+    "model": "issue_tracker.project",
+    "pk": 6,
+    "fields": {
+        "start_date": "2026-06-01",
+        "end_date": null,
+        "title": "API Integration",
+        "description": "Integration with third-party APIs and services"
+    }
+},
+{
     "model": "issue_tracker.task",
     "pk": 1,
     "fields": {
@@ -85,12 +135,12 @@
     "model": "issue_tracker.task",
     "pk": 3,
     "fields": {
-        "summary": "Resolve some problems",
-        "description": "Some lines have some problems need some solutions",
+        "summary": "Refactor database layer",
+        "description": "Improve query performance",
         "status": 1,
-        "project": 1,
-        "created_at": "2026-06-01T08:00:00Z",
-        "updated_at": "2026-06-10T12:00:00Z",
+        "project": 2,
+        "created_at": "2026-06-09T10:00:00Z",
+        "updated_at": "2026-06-11T09:00:00Z",
         "type": [
             1,
             3
@@ -101,15 +151,14 @@
     "model": "issue_tracker.task",
     "pk": 4,
     "fields": {
-        "summary": "Add 3 task",
-        "description": "Heh",
+        "summary": "Migrate to PostgreSQL",
+        "description": "Move from SQLite to PostgreSQL in production",
         "status": 3,
-        "project": 1,
-        "created_at": "2026-04-15T09:00:00Z",
-        "updated_at": "2026-04-20T11:00:00Z",
+        "project": 2,
+        "created_at": "2026-04-01T08:00:00Z",
+        "updated_at": "2026-04-30T18:00:00Z",
         "type": [
-            1,
-            2
+            1
         ]
     }
 },
@@ -117,12 +166,12 @@
     "model": "issue_tracker.task",
     "pk": 5,
     "fields": {
-        "summary": "Fix login bug",
-        "description": "Fix login bug",
-        "status": 3,
-        "project": 1,
-        "created_at": "2026-05-20T07:00:00Z",
-        "updated_at": "2026-05-25T15:00:00Z",
+        "summary": "Fix null pointer bug in parser",
+        "description": "Parser crashes when input is null",
+        "status": 2,
+        "project": 2,
+        "created_at": "2026-06-10T14:00:00Z",
+        "updated_at": "2026-06-13T16:00:00Z",
         "type": [
             2
         ]
@@ -132,14 +181,14 @@
     "model": "issue_tracker.task",
     "pk": 6,
     "fields": {
-        "summary": "Update dependencies",
-        "description": "Update all outdated packages",
-        "status": 2,
-        "project": 1,
-        "created_at": "2026-06-05T09:30:00Z",
-        "updated_at": "2026-06-12T10:00:00Z",
+        "summary": "Fix login bug",
+        "description": "Fix login bug",
+        "status": 3,
+        "project": 3,
+        "created_at": "2026-05-20T07:00:00Z",
+        "updated_at": "2026-05-25T15:00:00Z",
         "type": [
-            1
+            2
         ]
     }
 },
@@ -150,7 +199,7 @@
         "summary": "Add dark mode support",
         "description": "Add dark mode support",
         "status": 1,
-        "project": 1,
+        "project": 3,
         "created_at": "2026-06-08T11:00:00Z",
         "updated_at": "2026-06-14T08:00:00Z",
         "type": [
@@ -162,43 +211,12 @@
     "model": "issue_tracker.task",
     "pk": 8,
     "fields": {
-        "summary": "Fix null pointer bug in parser",
-        "description": "Parser crashes when input is null",
+        "summary": "CI/CD pipeline setup",
+        "description": "Configure GitHub Actions for automated deployment",
         "status": 2,
-        "project": 1,
-        "created_at": "2026-06-10T14:00:00Z",
-        "updated_at": "2026-06-13T16:00:00Z",
-        "type": [
-            2
-        ]
-    }
-},
-{
-    "model": "issue_tracker.task",
-    "pk": 9,
-    "fields": {
-        "summary": "Refactor database layer",
-        "description": "Improve query performance",
-        "status": 1,
-        "project": 1,
-        "created_at": "2026-06-09T10:00:00Z",
-        "updated_at": "2026-06-11T09:00:00Z",
-        "type": [
-            1,
-            3
-        ]
-    }
-},
-{
-    "model": "issue_tracker.task",
-    "pk": 10,
-    "fields": {
-        "summary": "Write unit tests for auth module",
-        "description": "Write unit tests for auth module",
-        "status": 3,
-        "project": 1,
-        "created_at": "2026-05-10T08:00:00Z",
-        "updated_at": "2026-05-15T17:00:00Z",
+        "project": 4,
+        "created_at": "2026-04-15T09:00:00Z",
+        "updated_at": "2026-04-20T11:00:00Z",
         "type": [
             1
         ]
@@ -206,16 +224,46 @@
 },
 {
     "model": "issue_tracker.task",
-    "pk": 11,
+    "pk": 9,
     "fields": {
-        "summary": "Investigate memory leak Bug",
+        "summary": "Investigate memory leak",
         "description": "Memory usage grows after 24h",
         "status": 2,
-        "project": 1,
+        "project": 4,
         "created_at": "2026-06-07T12:00:00Z",
         "updated_at": "2026-06-14T11:00:00Z",
         "type": [
             2
+        ]
+    }
+},
+{
+    "model": "issue_tracker.task",
+    "pk": 10,
+    "fields": {
+        "summary": "Add pagination to task list",
+        "description": "Add pagination to task list",
+        "status": 3,
+        "project": 5,
+        "created_at": "2026-05-28T10:00:00Z",
+        "updated_at": "2026-06-02T15:00:00Z",
+        "type": [
+            3
+        ]
+    }
+},
+{
+    "model": "issue_tracker.task",
+    "pk": 11,
+    "fields": {
+        "summary": "Update dependencies",
+        "description": "Update all outdated packages",
+        "status": 2,
+        "project": 5,
+        "created_at": "2026-06-05T09:30:00Z",
+        "updated_at": "2026-06-12T10:00:00Z",
+        "type": [
+            1
         ]
     }
 },
@@ -226,7 +274,7 @@
         "summary": "Add export to CSV feature",
         "description": "Users need to download data as CSV",
         "status": 1,
-        "project": 1,
+        "project": 6,
         "created_at": "2026-06-11T13:00:00Z",
         "updated_at": "2026-06-11T13:00:00Z",
         "type": [
@@ -238,58 +286,28 @@
     "model": "issue_tracker.task",
     "pk": 13,
     "fields": {
-        "summary": "Fix sorting bug on index page",
-        "description": "Fix sorting bug on index page",
+        "summary": "Improve API response time",
+        "description": "Improve API response time",
         "status": 1,
-        "project": 1,
-        "created_at": "2026-06-12T09:00:00Z",
-        "updated_at": "2026-06-14T14:00:00Z",
+        "project": 6,
+        "created_at": "2026-06-14T07:00:00Z",
+        "updated_at": "2026-06-14T07:00:00Z",
         "type": [
             1,
-            2
-        ]
-    }
-},
-{
-    "model": "issue_tracker.task",
-    "pk": 14,
-    "fields": {
-        "summary": "Migrate to PostgreSQL",
-        "description": "Move from SQLite to PostgreSQL in production",
-        "status": 3,
-        "project": 1,
-        "created_at": "2026-04-01T08:00:00Z",
-        "updated_at": "2026-04-30T18:00:00Z",
-        "type": [
-            1
-        ]
-    }
-},
-{
-    "model": "issue_tracker.task",
-    "pk": 15,
-    "fields": {
-        "summary": "Add pagination to task list",
-        "description": "Add pagination to task list",
-        "status": 3,
-        "project": 1,
-        "created_at": "2026-05-28T10:00:00Z",
-        "updated_at": "2026-06-02T15:00:00Z",
-        "type": [
             3
         ]
     }
 },
 {
     "model": "issue_tracker.task",
-    "pk": 16,
+    "pk": 19,
     "fields": {
-        "summary": "Fix email notification bug",
-        "description": "Emails are sent twice on task creation",
-        "status": 2,
-        "project": 1,
-        "created_at": "2026-06-13T08:00:00Z",
-        "updated_at": "2026-06-14T09:00:00Z",
+        "summary": "Normal Task",
+        "description": "fdsfdsf",
+        "status": 3,
+        "project": 3,
+        "created_at": "2026-06-18T11:39:31.531Z",
+        "updated_at": "2026-06-18T11:59:52.997Z",
         "type": [
             2
         ]
@@ -297,16 +315,17 @@
 },
 {
     "model": "issue_tracker.task",
-    "pk": 17,
+    "pk": 20,
     "fields": {
-        "summary": "Improve API response time",
-        "description": "Improve API response time",
-        "status": 1,
-        "project": 1,
-        "created_at": "2026-06-14T07:00:00Z",
-        "updated_at": "2026-06-14T07:00:00Z",
+        "summary": "fdsgfds",
+        "description": "gfdsgfds",
+        "status": 2,
+        "project": 3,
+        "created_at": "2026-06-18T12:00:04.118Z",
+        "updated_at": "2026-06-18T12:00:04.118Z",
         "type": [
             1,
+            2,
             3
         ]
     }
