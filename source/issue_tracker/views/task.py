@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.views.generic import DetailView, UpdateView, DeleteView
@@ -19,7 +20,7 @@ class TaskDetailView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Task, pk=self.kwargs.get('pk'))
 
-class TaskCreateView(View):
+class TaskCreateView(LoginRequiredMixin, View):
     def get(self, request, pk):
         project = get_object_or_404(Project, pk=pk)
         form = TaskForm()
@@ -36,7 +37,7 @@ class TaskCreateView(View):
             return redirect("project-detail", pk=project.pk)
         return render(request, "task/create.html", {"form": form, "project": project})
 
-class TaskUpdateView(UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     form_class = TaskForm
     template_name = "task/update.html"
@@ -56,7 +57,7 @@ class TaskUpdateView(UpdateView):
         return context
 
 
-class TaskDeleteView(DeleteView):
+class TaskDeleteView(LoginRequiredMixin, DeleteView):
     model = Task
 
     def get_object(self, queryset=None):
