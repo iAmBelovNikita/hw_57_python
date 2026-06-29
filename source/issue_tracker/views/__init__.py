@@ -10,4 +10,5 @@ from .project import (
     ProjectCreateView,
     ProjectUpdateView,
     ProjectDeleteView,
+    ProjectUsersView,
 )

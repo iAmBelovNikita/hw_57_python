@@ -5,6 +5,7 @@
     <a href="{% url 'project-list' %}" class="btn btn-secondary">Back</a>
     <a href="{% url 'task-create' project.pk %}" class="btn btn-primary">Add Task</a>
     <a href="{% url 'project-update' project.pk %}" class="btn btn-success">Edit</a>
+    <a href="{% url 'project-users' project.pk %}" class="btn btn-info">Manage users</a>
     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#project-{{ project.pk }}-Modal">
       Delete
     </button>
@@ -20,6 +21,14 @@
         <strong>Start:</strong> {{ project.start_date }}
         &nbsp;
         <strong>End:</strong> {{ project.end_date|default:"—" }}
+      </p>
+      <p class="card-text mb-0">
+        <strong>Members:</strong>
+        {% for user in project.users.all %}
+          <span class="badge bg-secondary">{{ user.username }}</span>
+        {% empty %}
+          <span class="text-muted">no members yet</span>
+        {% endfor %}
       </p>
     </div>
   </div>
