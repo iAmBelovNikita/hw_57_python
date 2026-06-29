@@ -48,7 +48,12 @@
         "start_date": "2026-06-18",
         "end_date": null,
         "title": "Test Project",
-        "description": "Auto-created project"
+        "description": "Auto-created project",
+        "users": [
+            2,
+            3,
+            4
+        ]
     }
 },
 {
@@ -58,7 +63,11 @@
         "start_date": "2026-01-01",
         "end_date": "2026-06-30",
         "title": "Backend Refactor",
-        "description": "Refactoring the backend services and database layer"
+        "description": "Refactoring the backend services and database layer",
+        "users": [
+            2,
+            4
+        ]
     }
 },
 {
@@ -68,7 +77,11 @@
         "start_date": "2026-03-01",
         "end_date": null,
         "title": "Mobile App",
-        "description": "Development of the mobile application"
+        "description": "Development of the mobile application",
+        "users": [
+            3,
+            4
+        ]
     }
 },
 {
@@ -78,7 +91,10 @@
         "start_date": "2026-04-15",
         "end_date": "2026-12-31",
         "title": "DevOps Infrastructure",
-        "description": "CI/CD pipelines, monitoring and deployment automation"
+        "description": "CI/CD pipelines, monitoring and deployment automation",
+        "users": [
+            2
+        ]
     }
 },
 {
@@ -88,7 +104,8 @@
         "start_date": "2026-05-01",
         "end_date": null,
         "title": "Frontend Redesign",
-        "description": "Full redesign of the user interface"
+        "description": "Full redesign of the user interface",
+        "users": []
     }
 },
 {
@@ -98,7 +115,10 @@
         "start_date": "2026-06-01",
         "end_date": null,
         "title": "API Integration",
-        "description": "Integration with third-party APIs and services"
+        "description": "Integration with third-party APIs and services",
+        "users": [
+            3
+        ]
     }
 },
 {
@@ -345,6 +365,164 @@
         "is_active": true,
         "date_joined": "2026-06-11T05:59:56.879Z",
         "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "Project Manager",
+        "permissions": [
+            [
+                "add_project",
+                "issue_tracker",
+                "project"
+            ],
+            [
+                "change_project",
+                "issue_tracker",
+                "project"
+            ],
+            [
+                "delete_project",
+                "issue_tracker",
+                "project"
+            ],
+            [
+                "manage_project_users",
+                "issue_tracker",
+                "project"
+            ],
+            [
+                "add_task",
+                "issue_tracker",
+                "task"
+            ],
+            [
+                "change_task",
+                "issue_tracker",
+                "task"
+            ],
+            [
+                "delete_task",
+                "issue_tracker",
+                "task"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "Team Lead",
+        "permissions": [
+            [
+                "manage_project_users",
+                "issue_tracker",
+                "project"
+            ],
+            [
+                "add_task",
+                "issue_tracker",
+                "task"
+            ],
+            [
+                "change_task",
+                "issue_tracker",
+                "task"
+            ],
+            [
+                "delete_task",
+                "issue_tracker",
+                "task"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+        "name": "Developer",
+        "permissions": [
+            [
+                "add_task",
+                "issue_tracker",
+                "task"
+            ],
+            [
+                "change_task",
+                "issue_tracker",
+                "task"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$x1ozut7grwjPjAEmj8itTu$6Y1kECFEhBmC59EyT3G1KESako8uGZMza40LXnPiCrM=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "manager",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-06-29T00:00:00Z",
+        "groups": [
+            [
+                "Project Manager"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$dnFxZalQSGn4ZslIFwyJUr$0ysyZUwHD86YFWgWIiy8qfaA78ShZ0e3v9n1ArqBAuw=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "lead",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-06-29T00:00:00Z",
+        "groups": [
+            [
+                "Team Lead"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1200000$zEzgAMQQCuo7fpZpWrfGQf$AROw82HCohmMJ+z+MnHxMjlb7DB3Po64KRk+lu+GLYE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dev",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-06-29T00:00:00Z",
+        "groups": [
+            [
+                "Developer"
+            ]
+        ],
         "user_permissions": []
     }
 }
