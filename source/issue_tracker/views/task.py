@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
-from django.views.generic import DetailView, UpdateView, DeleteView
+from django.views.generic import DetailView, UpdateView, DeleteView, CreateView
 from django.urls import reverse
 from ..models import Task, Project
 from ..forms import TaskForm
@@ -20,22 +20,27 @@ class TaskDetailView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Task, pk=self.kwargs.get('pk'))
 
-class TaskCreateView(LoginRequiredMixin, View):
-    def get(self, request, pk):
-        project = get_object_or_404(Project, pk=pk)
-        form = TaskForm()
-        return render(request, "task/create.html", {"form": form, "project": project})
+class TaskCreateView(LoginRequiredMixin, CreateView):
+    model = Task
+    form_class = TaskForm
+    template_name = "task/create.html"
+    context_object_name = "task"
 
-    def post(self, request, pk):
-        project = get_object_or_404(Project, pk=pk)
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            task = form.save(commit=False)
-            task.project = project
-            task.save()
-            task.type.set(form.cleaned_data['type'])
-            return redirect("project-detail", pk=project.pk)
-        return render(request, "task/create.html", {"form": form, "project": project})
+    def get_success_url(self):
+        return reverse("project-detail", kwargs={"pk": self.kwargs["pk"]})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["project"] = get_object_or_404(Project, pk=self.kwargs["pk"])
+        return context
+
+    def form_valid(self, form):
+        project = get_object_or_404(Project, pk=self.kwargs["pk"])
+        task = form.save(commit=False)
+        task.project = project
+        task.save()
+        form.save_m2m()
+        return redirect(self.get_success_url())
 
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
@@ -48,7 +53,6 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         task = form.save()
-        task.type.set(form.cleaned_data['type'])
         return redirect('detail', pk=task.pk)
 
     def get_context_data(self, **kwargs):
