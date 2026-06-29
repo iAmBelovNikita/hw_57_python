@@ -2,9 +2,11 @@
 {% block nav %}
 <div class="d-flex gap-2 mt-4">
   <a href="{% url 'project-detail' project.pk %}" class="btn btn-secondary">Back</a>
-  <a href="{% url 'task-create' project.pk %}" class="btn btn-primary">
-    Create Task
-  </a>
+  {% if perms.issue_tracker.add_task and request.user in project.users.all %}
+    <a href="{% url 'task-create' project.pk %}" class="btn btn-primary">
+      Create Task
+    </a>
+  {% endif %}
 </div>
 {% endblock %}
 {% block content %}
@@ -38,12 +40,16 @@
       </p>
 
       <div class="d-flex gap-2 mt-4">
-        <a href="{% url 'update' task.pk %}" class="btn btn-success">
-          Update
-        </a>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
-          Remove
-        </button>
+        {% if perms.issue_tracker.change_task and request.user in project.users.all %}
+          <a href="{% url 'update' task.pk %}" class="btn btn-success">
+            Update
+          </a>
+        {% endif %}
+        {% if perms.issue_tracker.delete_task and request.user in project.users.all %}
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
+            Remove
+          </button>
+        {% endif %}
       </div>
     </div>
       {% include 'partial/task_delete_modal.html' with task=task %}

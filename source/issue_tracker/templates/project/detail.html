@@ -3,12 +3,20 @@
 {% block nav %}
   <div class="d-flex gap-2">
     <a href="{% url 'project-list' %}" class="btn btn-secondary">Back</a>
-    <a href="{% url 'task-create' project.pk %}" class="btn btn-primary">Add Task</a>
-    <a href="{% url 'project-update' project.pk %}" class="btn btn-success">Edit</a>
-    <a href="{% url 'project-users' project.pk %}" class="btn btn-info">Manage users</a>
-    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#project-{{ project.pk }}-Modal">
-      Delete
-    </button>
+    {% if perms.issue_tracker.add_task and request.user in project.users.all %}
+      <a href="{% url 'task-create' project.pk %}" class="btn btn-primary">Add Task</a>
+    {% endif %}
+    {% if perms.issue_tracker.manage_project_users and request.user in project.users.all %}
+      <a href="{% url 'project-users' project.pk %}" class="btn btn-info">Manage users</a>
+    {% endif %}
+    {% if perms.issue_tracker.change_project and request.user in project.users.all %}
+      <a href="{% url 'project-update' project.pk %}" class="btn btn-success">Edit</a>
+    {% endif %}
+    {% if perms.issue_tracker.delete_project and request.user in project.users.all %}
+      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#project-{{ project.pk }}-Modal">
+        Delete
+      </button>
+    {% endif %}
   </div>
 {% endblock %}
 
@@ -48,12 +56,16 @@
                 <a href="{% url 'detail' task.pk %}" class="text-dark text-decoration-none">
                   <i class="bi bi-info-square"></i>
                 </a>
-                <a href="{% url 'update' task.pk %}" class="text-dark text-decoration-none">
-                  <i class="bi bi-pencil-square"></i>
-                </a>
-                <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
-                  <i class="bi bi-x-square"></i>
-                </a>
+                {% if perms.issue_tracker.change_task and request.user in project.users.all %}
+                  <a href="{% url 'update' task.pk %}" class="text-dark text-decoration-none">
+                    <i class="bi bi-pencil-square"></i>
+                  </a>
+                {% endif %}
+                {% if perms.issue_tracker.delete_task and request.user in project.users.all %}
+                  <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#task-{{ task.pk }}-Modal">
+                    <i class="bi bi-x-square"></i>
+                  </a>
+                {% endif %}
               </div>
             </div>
             <p class="card-text mb-0">{{ task.description }}</p>

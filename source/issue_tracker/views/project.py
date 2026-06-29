@@ -1,12 +1,14 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, get_object_or_404, render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views import View
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
 from django.db.models import Q
+
 from ..models import Project
 from ..forms import ProjectForm
+from ..mixins import ProjectMemberRequiredMixin
 
 
 class ProjectListView(ListView):
@@ -41,44 +43,57 @@ class ProjectDetailView(DetailView):
         return context
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     model = Project
     form_class = ProjectForm
     template_name = "project/create.html"
+    permission_required = "issue_tracker.add_project"
+
+    def get_success_url(self):
+        return reverse("project-detail", kwargs={"pk": self.object.pk})
 
     def form_valid(self, form):
         response = super().form_valid(form)
         self.object.users.add(self.request.user)
         return response
 
-    def get_success_url(self):
-        return reverse("project-detail", kwargs={"pk": self.object.pk})
 
-
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, ProjectMemberRequiredMixin, UpdateView):
     model = Project
     form_class = ProjectForm
     template_name = "project/update.html"
+    permission_required = "issue_tracker.change_project"
+
+    def get_project(self):
+        return self.get_object()
 
     def get_success_url(self):
         return reverse("project-detail", kwargs={"pk": self.object.pk})
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, ProjectMemberRequiredMixin, DeleteView):
     model = Project
     success_url = reverse_lazy("project-list")
+    permission_required = "issue_tracker.delete_project"
+
+    def get_project(self):
+        return self.get_object()
 
     def get(self, request, *args, **kwargs):
         return redirect("project-list")
 
 
-class ProjectUsersView(LoginRequiredMixin, View):
+class ProjectUsersView(PermissionRequiredMixin, ProjectMemberRequiredMixin, View):
+    permission_required = "issue_tracker.manage_project_users"
+
+    def get_project(self):
+        return get_object_or_404(Project, pk=self.kwargs["pk"])
+
     def get(self, request, *args, **kwargs):
-        project = get_object_or_404(Project, pk=kwargs["pk"])
-        return self.render_page(request, project)
+        return self.render_page(request, self.get_project())
 
     def post(self, request, *args, **kwargs):
-        project = get_object_or_404(Project, pk=kwargs["pk"])
+        project = self.get_project()
         action = request.POST.get("action")
         user = get_object_or_404(User, pk=request.POST.get("user_id"))
         if action == "add":

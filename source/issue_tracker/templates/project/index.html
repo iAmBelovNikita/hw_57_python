@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block nav %}
-  <a href="{% url 'project-create' %}" class="btn btn-primary">Add Project</a>
+  {% if perms.issue_tracker.add_project %}
+    <a href="{% url 'project-create' %}" class="btn btn-primary">Add Project</a>
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -24,12 +26,16 @@
                   <a href="{% url 'project-detail' project.pk %}" class="text-dark text-decoration-none">
                     <i class="bi bi-info-square"></i>
                   </a>
-                  <a href="{% url 'project-update' project.pk %}" class="text-dark text-decoration-none">
-                    <i class="bi bi-pencil-square"></i>
-                  </a>
-                  <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-{{ project.pk }}-Modal">
-                    <i class="bi bi-x-square"></i>
-                  </a>
+                  {% if perms.issue_tracker.change_project and request.user in project.users.all %}
+                    <a href="{% url 'project-update' project.pk %}" class="text-dark text-decoration-none">
+                      <i class="bi bi-pencil-square"></i>
+                    </a>
+                  {% endif %}
+                  {% if perms.issue_tracker.delete_project and request.user in project.users.all %}
+                    <a href="#" class="text-dark text-decoration-none" data-bs-toggle="modal" data-bs-target="#project-{{ project.pk }}-Modal">
+                      <i class="bi bi-x-square"></i>
+                    </a>
+                  {% endif %}
                 </div>
               </div>
               <p class="card-text mb-0">{{ project.description }}</p>
