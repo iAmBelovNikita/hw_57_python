@@ -33,6 +33,9 @@ class Project(models.Model):
 
     class Meta:
         db_table = 'project'
+        permissions = [
+            ("manage_project_users", "Can manage project users"),
+        ]
 
 class Task(models.Model):
     summary = models.CharField(max_length=200)
